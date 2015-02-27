@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,7 +30,12 @@ public class SignUpActivity extends ActionBarActivity {
 		passwordEdit = (EditText) findViewById(R.id.login_password);
 		passwordConfirmEdit = (EditText) findViewById(R.id.login_password_confirm);
 		mActionButtom = (Button) findViewById(R.id.signup_button);
-		mActionButtom.setOnClickListener(e -> signup());
+		mActionButtom.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				signup();
+			}
+		});
 	}
 
 
@@ -38,7 +44,7 @@ public class SignUpActivity extends ActionBarActivity {
 		String password = passwordEdit.getText().toString().trim();
 		String passwordagain = passwordConfirmEdit.getText().toString().trim();
 		boolean fail = false;
-		if (username.length() == 0 || !username.matches("a-zA-z.0-9_")) {
+		if (username.length() == 0 || !username.matches("[a-zA-z.0-9_]*")) {
 			usernameEdit.setError("Invalid username");
 			fail = true;
 		}
@@ -58,7 +64,8 @@ public class SignUpActivity extends ActionBarActivity {
 			user.signUpInBackground(new SignUpCallback() {
 				@Override
 				public void done(ParseException e) {
-					if (e != null) {
+
+if (e != null) {
 						// Show the error message
 						Toast.makeText(SignUpActivity.this, e.getMessage(),
 								Toast.LENGTH_LONG).show();

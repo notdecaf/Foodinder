@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 
@@ -21,6 +22,7 @@ public class DispatchActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Parse.initialize(this, getString(R.string.applicationID),getString(R.string.clientKey));
+
 		if(ParseUser.getCurrentUser() != null) {
 			startActivity(new Intent(this, MainActivity.class));
 		}

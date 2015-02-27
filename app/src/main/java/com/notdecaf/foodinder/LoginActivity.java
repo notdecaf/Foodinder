@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,21 +32,25 @@ public class LoginActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_login);
 		usernameEdit = (EditText) findViewById(R.id.login_username);
 		passwordEdit = (EditText) findViewById(R.id.login_password);
-		mActionButtom = (Button) findViewById(R.id.signup_button);
-		mActionButtom.setOnClickListener(e -> signin());
+		mActionButtom = (Button) findViewById(R.id.login_button);
+		mActionButtom.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				signin();
+			}
+		});
 	}
 
 	public void signin() {
 		String username = usernameEdit.getText().toString().trim();
 		String password = passwordEdit.getText().toString().trim();
 		boolean fail = false;
-		if (username.length() == 0 || !username.matches("a-zA-z.0-9_")) {
+		if (username.length() == 0) {
 			usernameEdit.setError("Invalid username");
 			fail = true;
 		}
 		if (password.length() <= 8) {
 			passwordEdit.setError("Invalid password");
-			passwordConfirmEdit.setText("");
 			fail = true;
 		}
 		if (!fail) {
@@ -87,5 +92,10 @@ public class LoginActivity extends ActionBarActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void gotoRegister(View view) {
+		Intent intent = new Intent(this, SignUpActivity.class);
+		startActivity(intent);
 	}
 }
