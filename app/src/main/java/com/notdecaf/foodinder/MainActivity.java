@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,10 +21,14 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//We don't actually have our fragments yet so this part is useless for now
-		/*ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
-		mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
-		pager.setAdapter(mainPagerAdapter);*/
+		List<Fragment> fragmentList = new ArrayList<Fragment>();
+		fragmentList.add(new ProfileFragment());
+		fragmentList.add(new HomeFragment());
+		fragmentList.add(new HistoryFragment());
+
+		ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+		mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),fragmentList);
+		pager.setAdapter(mainPagerAdapter);
 	}
 
 
