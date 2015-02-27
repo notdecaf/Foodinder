@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -19,6 +20,7 @@ public class SignUpActivity extends ActionBarActivity {
 	EditText passwordEdit;
 	EditText passwordConfirmEdit;
 	Button mActionButtom;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,20 +38,19 @@ public class SignUpActivity extends ActionBarActivity {
 		String password = passwordEdit.getText().toString().trim();
 		String passwordagain = passwordConfirmEdit.getText().toString().trim();
 		boolean fail = false;
-		if(username.length() == 0 || !username.matches("a-zA-z.0-9_")) {
+		if (username.length() == 0 || !username.matches("a-zA-z.0-9_")) {
 			usernameEdit.setError("Invalid username");
 			fail = true;
 		}
-		if(password.length() <= 8) {
+		if (password.length() <= 8) {
 			passwordEdit.setError("Invalid password");
 			passwordConfirmEdit.setText("");
 			fail = true;
-		}
-		else if(!passwordagain.equals(password)){
-			fail=true;
+		} else if (!passwordagain.equals(password)) {
+			fail = true;
 			passwordConfirmEdit.setError("Invalid password");
 		}
-		if(!fail) {
+		if (!fail) {
 			ParseUser user = new ParseUser();
 			user.setUsername(username);
 			user.setPassword(password);
@@ -57,9 +58,17 @@ public class SignUpActivity extends ActionBarActivity {
 			user.signUpInBackground(new SignUpCallback() {
 				@Override
 				public void done(ParseException e) {
-					Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-					startActivity(intent);
-					finish();
+					if (e != null) {
+						// Show the error message
+						Toast.makeText(SignUpActivity.this, e.getMessage(),
+								Toast.LENGTH_LONG).show();
+					} else {
+						// Start an intent for the dispatch activity
+						Intent intent = new Intent(SignUpActivity.this, DispatchActivity.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+								Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(intent);
+					}
 				}
 			});
 		}

@@ -1,23 +1,71 @@
 package com.notdecaf.foodinder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
+import javax.security.auth.login.LoginException;
 
 
 public class LoginActivity extends ActionBarActivity {
+	EditText usernameEdit;
+	EditText passwordEdit;
+	EditText passwordConfirmEdit;
+	Button mActionButtom;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		Parse.initialize(this, getString(R.string.applicationID),getString(R.string.clientKey));
-
+		usernameEdit = (EditText) findViewById(R.id.login_username);
+		passwordEdit = (EditText) findViewById(R.id.login_password);
+		mActionButtom = (Button) findViewById(R.id.signup_button);
+		mActionButtom.setOnClickListener(e -> signin());
 	}
 
+	public void signin() {
+		String username = usernameEdit.getText().toString().trim();
+		String password = passwordEdit.getText().toString().trim();
+		boolean fail = false;
+		if (username.length() == 0 || !username.matches("a-zA-z.0-9_")) {
+			usernameEdit.setError("Invalid username");
+			fail = true;
+		}
+		if (password.length() <= 8) {
+			passwordEdit.setError("Invalid password");
+			passwordConfirmEdit.setText("");
+			fail = true;
+		}
+		if (!fail) {
+			ParseUser.logInInBackground(username, password, new LogInCallback() {
+				@Override
+				public void done(ParseUser user, ParseException e) {
+					if (e != null) {
+						// Show the error message
+						Toast.makeText(LoginActivity.this, e.getMessage(),
+								Toast.LENGTH_LONG).show();
+					} else {
+						// Start an intent for the dispatch activity
+						Intent intent = new Intent(LoginActivity.this, DispatchActivity.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(intent);
+					}
+				}
+			});
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
