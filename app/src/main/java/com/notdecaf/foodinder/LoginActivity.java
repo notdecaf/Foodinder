@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.Parse;
+
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -12,6 +14,8 @@ public class LoginActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		Parse.initialize(this, getString(R.string.applicationID),getString(R.string.clientKey));
+
 	}
 
 

@@ -78,3 +78,5 @@ proguard/
 *.log
 
 
+
+app/src/main/res/values/keys.xml

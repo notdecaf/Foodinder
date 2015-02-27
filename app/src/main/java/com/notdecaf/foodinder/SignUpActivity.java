@@ -1,22 +1,69 @@
 package com.notdecaf.foodinder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 public class SignUpActivity extends ActionBarActivity {
-	EditText username;
-
+	EditText usernameEdit;
+	EditText passwordEdit;
+	EditText passwordConfirmEdit;
+	Button mActionButtom;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up);
-
+		usernameEdit = (EditText) findViewById(R.id.login_username);
+		passwordEdit = (EditText) findViewById(R.id.login_password);
+		passwordConfirmEdit = (EditText) findViewById(R.id.login_password_confirm);
+		mActionButtom = (Button) findViewById(R.id.signup_button);
+		mActionButtom.setOnClickListener(e -> signup());
 	}
 
+
+	public void signup() {
+		String username = usernameEdit.getText().toString().trim();
+		String password = passwordEdit.getText().toString().trim();
+		String passwordagain = passwordConfirmEdit.getText().toString().trim();
+		boolean fail = false;
+		if(username.length() == 0 || !username.matches("a-zA-z.0-9_")) {
+			usernameEdit.setError("Invalid username");
+			fail = true;
+		}
+		if(password.length() <= 8) {
+			passwordEdit.setError("Invalid password");
+			passwordConfirmEdit.setText("");
+			fail = true;
+		}
+		else if(!passwordagain.equals(password)){
+			fail=true;
+			passwordConfirmEdit.setError("Invalid password");
+		}
+		if(!fail) {
+			ParseUser user = new ParseUser();
+			user.setUsername(username);
+			user.setPassword(password);
+
+			user.signUpInBackground(new SignUpCallback() {
+				@Override
+				public void done(ParseException e) {
+					Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+					startActivity(intent);
+					finish();
+				}
+			});
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
