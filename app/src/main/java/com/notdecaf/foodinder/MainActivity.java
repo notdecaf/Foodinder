@@ -1,17 +1,29 @@
 package com.notdecaf.foodinder;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
+	MainPagerAdapter mainPagerAdapter;
 	//FOR SLACK!!!!
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		//We don't actually have our fragments yet so this part is useless for now
+		/*ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+		mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+		pager.setAdapter(mainPagerAdapter);*/
 	}
 
 
@@ -35,5 +47,24 @@ public class MainActivity extends ActionBarActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private class MainPagerAdapter extends FragmentPagerAdapter {
+		List<Fragment> fragments;
+
+		public MainPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+			super(fm);
+			this.fragments = fragments;
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return this.fragments.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return 3;
+		}
 	}
 }
