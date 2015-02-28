@@ -29,6 +29,9 @@ public class MainActivity extends ActionBarActivity {
 		ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
 		mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),fragmentList);
 		pager.setAdapter(mainPagerAdapter);
+
+		//Start off with the home fragment
+		pager.setCurrentItem(1);
 	}
 
 
