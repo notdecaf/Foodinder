@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -20,6 +21,9 @@ public class SignUpActivity extends ActionBarActivity {
 	EditText usernameEdit;
 	EditText passwordEdit;
 	EditText passwordConfirmEdit;
+	EditText dietRestrictionEdit;
+	RadioGroup alcoholGroup;
+	String alcoholChoice;
 	Button mActionButtom;
 
 	@Override
@@ -29,7 +33,20 @@ public class SignUpActivity extends ActionBarActivity {
 		usernameEdit = (EditText) findViewById(R.id.login_username);
 		passwordEdit = (EditText) findViewById(R.id.login_password);
 		passwordConfirmEdit = (EditText) findViewById(R.id.login_password_confirm);
+		dietRestrictionEdit = (EditText) findViewById(R.id.diet_restrctions);
 		mActionButtom = (Button) findViewById(R.id.signup_button);
+		alcoholGroup = (RadioGroup) findViewById(R.id.alcohol_buttons);
+
+		alcoholGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if(checkedId == R.id.alcohol_yes)
+					alcoholChoice = "yes";
+				else
+					alcoholChoice = "no";
+			}
+		});
+
 		mActionButtom.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -43,6 +60,11 @@ public class SignUpActivity extends ActionBarActivity {
 		String username = usernameEdit.getText().toString().trim();
 		String password = passwordEdit.getText().toString().trim();
 		String passwordagain = passwordConfirmEdit.getText().toString().trim();
+		String dietRestrictions = dietRestrictionEdit.getText().toString().trim();
+
+		if (dietRestrictions.matches("")) {
+			dietRestrictions = "none";
+		}
 		boolean fail = false;
 		if (username.length() == 0 || !username.matches("[a-zA-z.0-9_]*")) {
 			usernameEdit.setError("Invalid username");
@@ -55,11 +77,15 @@ public class SignUpActivity extends ActionBarActivity {
 		} else if (!passwordagain.equals(password)) {
 			fail = true;
 			passwordConfirmEdit.setError("Invalid password");
+		} else if (alcoholGroup.getCheckedRadioButtonId() == -1) {
+			fail = true;
 		}
 		if (!fail) {
 			ParseUser user = new ParseUser();
 			user.setUsername(username);
 			user.setPassword(password);
+			user.put("diet",dietRestrictions);
+			user.put("alcohol",alcoholChoice);
 
 			user.signUpInBackground(new SignUpCallback() {
 				@Override
