@@ -96,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
 					transaction.replace(R.id.main_content,homeFragment);
 					transaction.commit();
 				}
+				mDrawerLayout.closeDrawers();
 			}
 		});
 	}
