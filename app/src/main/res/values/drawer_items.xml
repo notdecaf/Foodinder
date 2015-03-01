@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="home_list">
+		<item>Profile</item>
+		<item>History</item>
+	</string-array>
+
+	<string-array name="profile_list">
+		<item>Home</item>
+		<item>History</item>
+	</string-array>
+
+	<string-array name="history_list">
+		<item>Home</item>
+		<item>Profile</item>
+	</string-array>
+</resources>
