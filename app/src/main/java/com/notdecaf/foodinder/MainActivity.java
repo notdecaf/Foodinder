@@ -2,9 +2,6 @@ package com.notdecaf.foodinder;
 
 import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,11 +17,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
-	MainPagerAdapter mainPagerAdapter;
 	DrawerLayout mDrawerLayout;
 	ActionBarDrawerToggle mDrawerToggle;
 	ListView mDrawerList;
@@ -141,29 +136,10 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		if(mDrawerLayout.isDrawerOpen(Gravity.START|Gravity.LEFT)){
+		if(mDrawerLayout.isDrawerOpen(Gravity.START)){
 			mDrawerLayout.closeDrawers();
 			return;
 		}
 		super.onBackPressed();
-	}
-
-	private class MainPagerAdapter extends FragmentPagerAdapter {
-		List<Fragment> fragments;
-
-		public MainPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-			super(fm);
-			this.fragments = fragments;
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return this.fragments.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return 3;
-		}
 	}
 }
