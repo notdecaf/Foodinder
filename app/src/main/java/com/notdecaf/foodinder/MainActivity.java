@@ -3,6 +3,7 @@ package com.notdecaf.foodinder;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
 
 		//Set the toggle for the drawer which indicates the state of the drawer and spins the icon
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		mDrawerLayout.setDrawerShadow(R.drawable.rect_shadow, GravityCompat.START);
 		mDrawerToggle.syncState();
 
 		//Populate the drawer
