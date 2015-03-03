@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,13 +32,23 @@ public class MainActivity extends ActionBarActivity {
 	HomeFragment homeFragment;
 	HistoryFragment historyFragment;
 	ArrayAdapter drawerListAdapter;
-
+	ParseUser user;
+	boolean left;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		user = ParseUser.getCurrentUser();
+		if(user.get("layout").equals("right")) {
+			setContentView(R.layout.activity_main_right);
+			left = false;
+		}
+		else {
+			setContentView(R.layout.activity_main);
+			left = true;
+		}
 
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		Toolbar mToolBar = (Toolbar) findViewById(R.id.toolbar);
 		mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolBar,
@@ -58,7 +70,12 @@ public class MainActivity extends ActionBarActivity {
 
 		//Set the toggle for the drawer which indicates the state of the drawer and spins the icon
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		mDrawerLayout.setDrawerShadow(R.drawable.rect_shadow, GravityCompat.START);
+		if(left) {
+			mDrawerLayout.setDrawerShadow(R.drawable.rect_shadow_right, GravityCompat.START);
+		}
+		else {
+			mDrawerLayout.setDrawerShadow(R.drawable.rect_shadow_left, GravityCompat.END);
+		}
 		mDrawerToggle.syncState();
 
 		//Populate the drawer
@@ -118,8 +135,20 @@ public class MainActivity extends ActionBarActivity {
 		if (id == R.id.action_settings) {
 			startActivity(new Intent(this, SettingsActivity.class));
 		}
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
+		if(left) {
+			if (mDrawerToggle.onOptionsItemSelected(item)) {
+				return true;
+			}
+		}
+		else {
+			if (item.getItemId() == android.R.id.home) {
+				if (mDrawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+					mDrawerLayout.closeDrawers();
+				} else {
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
+				}
+			}
+			return false;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -139,9 +168,12 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		if(mDrawerLayout.isDrawerOpen(Gravity.START)){
+		if(left && mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
 			mDrawerLayout.closeDrawers();
 			return;
+		}
+		else if(!left && mDrawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+			mDrawerLayout.closeDrawers();
 		}
 		super.onBackPressed();
 	}

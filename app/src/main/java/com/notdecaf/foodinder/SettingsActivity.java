@@ -90,7 +90,7 @@ public class SettingsActivity extends ActionBarActivity {
 					user.saveInBackground(new SaveCallback() {
 						@Override
 						public void done(ParseException e) {
-							Toast.makeText(getApplicationContext(), "Preferences Saved", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "Please restart app for changes to take effect", Toast.LENGTH_SHORT).show();
 						}
 					});
 					changed = false;

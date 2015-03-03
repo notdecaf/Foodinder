@@ -7,12 +7,12 @@
 	android:fitsSystemWindows="true">
 
 	<include layout="@layout/toolbar"
-		android:id="@+id/toolbar"/>
+	         android:id="@+id/toolbar"/>
 
 	<android.support.v4.widget.DrawerLayout
 		android:layout_height="match_parent"
-	    android:layout_width="match_parent"
-	    android:layout_below="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_below="@+id/toolbar"
 		android:id="@+id/drawer_layout">
 
 		<FrameLayout
@@ -24,7 +24,7 @@
 		<ListView
 			android:id="@+id/left_drawer"
 			android:layout_width="280dp"
-			android:layout_gravity="left"
+			android:layout_gravity="right"
 			android:layout_height="match_parent"
 			android:choiceMode="singleChoice"
 			android:divider="@android:color/transparent"
