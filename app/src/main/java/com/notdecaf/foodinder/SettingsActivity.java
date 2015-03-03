@@ -30,6 +30,7 @@ public class SettingsActivity extends ActionBarActivity {
 		user = ParseUser.getCurrentUser();
 		alcohol = (RadioGroup) findViewById(R.id.alcohol_buttons);
 		layout = (RadioGroup) findViewById(R.id.layout_buttons);
+		saveButton = (Button) findViewById(R.id.saveButton);
 		try {
 			alcoholChoice = (String)user.get("alcohol");
 			if(alcoholChoice.equals("yes")) {
@@ -43,7 +44,7 @@ public class SettingsActivity extends ActionBarActivity {
 		}
 		try {
 			layoutChoice = (String)user.get("layout");
-			if(alcoholChoice.equals("yes")) {
+			if(layoutChoice.equals("left")) {
 				layout.check(R.id.layout_left);
 			}
 			else {
@@ -77,7 +78,7 @@ public class SettingsActivity extends ActionBarActivity {
 				}
 				else {
 					layoutChoice = "right";
-					user.put("alcohol",layoutChoice);
+					user.put("layout",layoutChoice);
 					changed = true;
 				}
 			}
