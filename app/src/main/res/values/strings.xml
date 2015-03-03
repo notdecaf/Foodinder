@@ -7,4 +7,6 @@
     <string name="title_activity_login">Login Activity</string>
     <string name="title_activity_sign_up">Sign Up Activity</string>
     <string name="title_activity_dispatch">DispatchActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
 </resources>

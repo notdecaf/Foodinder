@@ -36,7 +36,6 @@ public class SignUpActivity extends ActionBarActivity {
 		dietRestrictionEdit = (EditText) findViewById(R.id.diet_restrctions);
 		mActionButtom = (Button) findViewById(R.id.signup_button);
 		alcoholGroup = (RadioGroup) findViewById(R.id.alcohol_buttons);
-
 		alcoholGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -86,7 +85,7 @@ public class SignUpActivity extends ActionBarActivity {
 			user.setPassword(password);
 			user.put("diet",dietRestrictions);
 			user.put("alcohol",alcoholChoice);
-
+			user.put("layout","left");
 			user.signUpInBackground(new SignUpCallback() {
 				@Override
 				public void done(ParseException e) {

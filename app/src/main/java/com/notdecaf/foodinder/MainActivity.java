@@ -1,5 +1,6 @@
 package com.notdecaf.foodinder;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
@@ -113,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
-			return true;
+			startActivity(new Intent(this, SettingsActivity.class));
 		}
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
