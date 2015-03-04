@@ -3,7 +3,6 @@ package com.notdecaf.foodinder;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ public class HomeFragment extends Fragment {
 	private String mParam1;
 	private String mParam2;
 
-
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
@@ -52,16 +50,6 @@ public class HomeFragment extends Fragment {
 
 	public HomeFragment() {
 		// Required empty public constructor
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
 	}
 
 	@Override
@@ -92,6 +80,4 @@ public class HomeFragment extends Fragment {
 		adapter.add(card);
 		mCardContainer.setAdapter(adapter);
 	}
-
-
 }

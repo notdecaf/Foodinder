@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -136,16 +135,14 @@ public class MainActivity extends ActionBarActivity {
 			startActivity(new Intent(this, SettingsActivity.class));
 		}
 		if(left) {
-			if (mDrawerToggle.onOptionsItemSelected(item)) {
-				return true;
-			}
+			if (mDrawerToggle.onOptionsItemSelected(item)) return true;
 		}
 		else {
 			if (item.getItemId() == android.R.id.home) {
-				if (mDrawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+				if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 					mDrawerLayout.closeDrawers();
 				} else {
-					mDrawerLayout.openDrawer(Gravity.RIGHT);
+					mDrawerLayout.openDrawer(GravityCompat.START);
 				}
 			}
 			return false;
@@ -168,11 +165,11 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		if(left && mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+		if(left && mDrawerLayout.isDrawerOpen(GravityCompat.END)){
 			mDrawerLayout.closeDrawers();
 			return;
 		}
-		else if(!left && mDrawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+		else if(!left && mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
 			mDrawerLayout.closeDrawers();
 		}
 		super.onBackPressed();
