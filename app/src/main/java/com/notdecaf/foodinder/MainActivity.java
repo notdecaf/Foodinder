@@ -16,8 +16,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,13 +41,24 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		user = ParseUser.getCurrentUser();
-		if(user.get("layout").equals("right")) {
-			setContentView(R.layout.activity_main_right);
-			left = false;
-		}
-		else {
-			setContentView(R.layout.activity_main);
-			left = true;
+		try {
+			if (user.get("layout").equals("right")) {
+				setContentView(R.layout.activity_main_right);
+				left = false;
+			} else {
+				setContentView(R.layout.activity_main);
+				left = true;
+			}
+		}   catch (Exception e) {
+			user.put("layout","right");
+			user.saveInBackground(new SaveCallback() {
+				@Override
+				public void done(ParseException e) {
+
+				}
+				setContentView(R.layout.activity_main_right);
+				left = false;
+			});
 		}
 
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
