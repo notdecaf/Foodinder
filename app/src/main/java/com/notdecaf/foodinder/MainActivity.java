@@ -50,14 +50,14 @@ public class MainActivity extends ActionBarActivity {
 				left = true;
 			}
 		}   catch (Exception e) {
+			setContentView(R.layout.activity_main_right);
+			left = false;
 			user.put("layout","right");
 			user.saveInBackground(new SaveCallback() {
 				@Override
 				public void done(ParseException e) {
 
 				}
-				setContentView(R.layout.activity_main_right);
-				left = false;
 			});
 		}
 
